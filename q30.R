@@ -1,4 +1,4 @@
-source("q27.R")
+source("q29.R")
 
 cat(sprintf("Z is %.2f\n", rt$Z))
 cat(sprintf("P-value for the test statistic is %.4f\n", rt$pval))
