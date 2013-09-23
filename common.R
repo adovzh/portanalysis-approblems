@@ -4,7 +4,7 @@ loadMonthly <- function() {
   monthly <- read.table('Monthly.csv', header=TRUE, sep=',')
   
   # convert Date column to Date object type
-  monthly$Date <- as.Date(as.character(monthly$Date), format='%d/%m/%y')
+#   monthly$Date <- as.Date(as.character(monthly$Date), format='%d/%m/%y')
   
   return(monthly)
 }
