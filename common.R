@@ -21,3 +21,8 @@ plotHistAndNorm <- function(data, name) {
 extreme.obs <- function(data) {
   data[abs(data - mean(data)) > 2 * sd(data)]
 }
+
+toTimeSeries <- function(series) {
+  require(timeSeries)
+  return(timeSeries(series[,-1], as.character(series[,1])))
+}

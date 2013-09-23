@@ -1,4 +1,6 @@
+library(timeSeries)
 source("common.R")
 
-monthly <- loadMonthly()
+monthly <- toTimeSeries(loadMonthly())
 usb <- monthly[,"USBD10Y"]
+plot(usb)
