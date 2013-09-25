@@ -2,7 +2,7 @@ library(timeSeries)
 source("common.R")
 source("bonds.R")
 
-monthly <- toTimeSeries(loadMonthly("monthly2.csv"))
+monthly <- toTimeSeries(loadMonthly())
 usb <- monthly[,"USBD10Y"]
 bond.returns <- timeSeries(data=bond.hpr.monthly(usb[-length(usb)], usb[-1]),
                            charvec=rownames(usb)[-1])
