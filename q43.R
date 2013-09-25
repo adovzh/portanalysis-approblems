@@ -11,5 +11,7 @@ pval <- m[1,5]
 cat(sprintf("\nWe %s reject the null hypothesis that the groups have the same mean.\n",
             ifelse(pval < .05, "can", "can't")))
 group.means <- aggregate(series(sp.returns), by=list(ind), FUN=mean)
-rownames(group.means) <- as.character(group.means[,1])
-group.means <- group.means[2]
+gm <- group.means[,2] * 12
+names(gm) <- group.means[,1]
+barplot(gm, col="#818AFC", space=.8)
+title("Subperiod average annual returns")
