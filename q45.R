@@ -6,7 +6,7 @@ weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 cum.returns <- colCumsums(weekly.returns)
 
 oldpar <- par(mfrow=c(2,1))
-colors <- rainbow(n=15)
+colors <- rainbow(n=15, v=.9)
 plot(cum.returns[,1], ylim=range(cum.returns), col=colors[1],
      ylab="Cumulative returns")
 title(main="Cumulative return of 15 stocks")
