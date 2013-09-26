@@ -9,6 +9,8 @@ loadMonthly <- function(src="Monthly.csv") {
   return(monthly)
 }
 
+loadWeekly <- function() loadMonthly("Weekly.csv")
+
 plotHistAndNorm <- function(data, name) {
   h <- hist(data, breaks=40, col="blue", density=20, main=name)
   xfit <- seq(min(data), max(data), length=40)
