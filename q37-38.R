@@ -28,7 +28,7 @@ bond.sd <- sqrt(bond.var)
 
 sp.mean <- mean(sp.returns) * 12
 sp.var <- var(sp.returns) * 12
-sp.sd <- sqrt(bond.var)
+sp.sd <- sqrt(sp.var)
 
 excess.mean <- mean(excess.returns) * 12
 excess.var <- var(excess.returns) * 12
