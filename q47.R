@@ -1,6 +1,7 @@
 library(timeSeries)
 library(quadprog)
 source("common.R")
+source("efficientp.R")
 
 weekly <- toTimeSeries(loadWeekly())[,1:15]
 weekly.returns <- na.omit(fapply(weekly, FUN=returns))
@@ -17,7 +18,7 @@ absMinRiskWeights <- function(tS) {
 }
 
 cat("Weights using formula:\n")
-print(absMinRiskWeights(data))
+print(w1 <- absMinRiskWeights(data))
 
 
 s <- solve.QP(cov(data), 
@@ -25,4 +26,9 @@ s <- solve.QP(cov(data),
               matrix(rep(1, ncol(data))), 
               1, 1)
 cat("\nWeights solving quadratic programming problem:\n")
-print(matrix(s$solution, dimnames=list(colnames(data))))
+print(w2 <- matrix(s$solution, dimnames=list(colnames(data))))
+
+cat("\nWeights solving system of linear equations:\n")
+print(w3 <- matrix(findGMVP(cov(data)), dimnames=list(colnames(data))))
+
+cat(sprintf("\nAll equal: %s\n", all.equal(w1, w2) && all.equal(w1, w3)))
