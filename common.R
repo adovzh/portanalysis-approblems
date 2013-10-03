@@ -28,3 +28,10 @@ toTimeSeries <- function(series) {
   require(timeSeries)
   return(timeSeries(series[,-1], as.character(series[,1])))
 }
+
+asReport <- function(vec, name=NULL, rnames=NULL) {
+  if (is.null(rnames)) rnames<-names(vec)
+  dim(vec) <- c(length(vec), 1)
+  dimnames(vec) <- list(rnames, name)
+  return(vec)
+}

@@ -16,15 +16,8 @@ w2 <- findMVP(sigma,
               ret=means,
               target.return=max(means))
 
-z <- function(alpha) {
-  cbind(w1, w2) %*% c(alpha, 1 - alpha)
-}
-
-mv.coords <- function(w) {
-  risk <- t(w) %*% sigma %*% w
-  ret <- means %*% w
-  c(risk, ret)
-}
+mv.coords <- mv.coords.gen(sigma, means)
+z <- z.gen(w1, w2)
 
 alphas <- seq(-1, 1, by=.05)
 mv.points <- sapply(alphas, function(alpha) mv.coords(z(alpha)))
@@ -43,6 +36,7 @@ grid()
 
 # q51
 w3 <- findGMVP(sigma)
+cat("Global MVP weights:\n")
 print(as.matrix(w3))
 
 # a52 - equally weighted portfolio
