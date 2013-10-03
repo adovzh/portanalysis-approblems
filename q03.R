@@ -2,7 +2,7 @@
 # from the Excel data spreadsheet
 monthly <- read.table('Monthly.csv', header=TRUE, sep=',')
 # convert Date column to Date object type
-monthly$Date <- as.Date(as.character(monthly$Date), format='%d/%m/%y')
+monthly$Date <- as.Date(as.character(monthly$Date))
 
 len <- dim(monthly)[1]
 sp.growth <- log(monthly$S.PCOMP/monthly[1, 'S.PCOMP'])

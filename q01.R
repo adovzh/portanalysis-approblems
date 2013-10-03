@@ -3,7 +3,7 @@
 monthly <- read.table('Monthly.csv', header=TRUE, sep=',')
 
 # convert Date column to Date object type
-monthly$Date <- as.Date(as.character(monthly$Date), format='%d/%m/%y')
+monthly$Date <- as.Date(as.character(monthly$Date))
 
 # plot the index
 plot(monthly$Date, monthly$S.PCOMP, type='l', 

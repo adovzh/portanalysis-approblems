@@ -6,7 +6,7 @@
 monthly <- read.table('Monthly.csv', header=TRUE, sep=',')
 
 # convert Date column to Date object type
-monthly$Date <- as.Date(as.character(monthly$Date), format='%d/%m/%y')
+monthly$Date <- as.Date(as.character(monthly$Date))
 spr <- diff(log(monthly[,"S.PCOMP.RI."]))
 h <- hist(spr, breaks=40, col="blue", density=20)
 xfit <- seq(min(spr), max(spr), length=40)
