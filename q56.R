@@ -14,7 +14,8 @@ library(quadprog)
 s <- solve.QP(sigma,
               matrix(rep(0, ncol(sigma))),
               cbind(rep(1, ncol(sigma)),
+                    means[stocks],
                     c(rep(0, ncol(sigma)-1), 1)),
-              c(1, .2), 2)
+              c(1, .1, .2), 3)
 
 print(asReport(s$solution, "Weight", colnames(sigma)))
