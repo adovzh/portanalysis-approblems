@@ -3,7 +3,6 @@ source("common.R")
 source("efficientp.R")
 
 weekly <- toTimeSeries(loadWeekly())
-# weekly.sp <- weekly[,"S.PCOMP"] / weekly[,"USAUSTR"]
 weekly <- cbind(weekly, SPAUD=weekly[,"S.PCOMP"] / weekly[,"USAUSTR"])
 weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 means <- colMeans(weekly.returns) * 52
