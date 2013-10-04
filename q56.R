@@ -19,3 +19,5 @@ s <- solve.QP(sigma,
               c(1, .1, .2), 3)
 
 print(asReport(s$solution, "Weight", colnames(sigma)))
+cat(sprintf("\nExpected return: %g%%\n", 
+            100 * crossprod(s$solution, means[stocks])))
