@@ -35,3 +35,6 @@ asReport <- function(vec, name=NULL, rnames=NULL) {
   dimnames(vec) <- list(rnames, name)
   return(vec)
 }
+
+BANKING_STOCKS <- c("CBA", "WBC", "ANZ", "NAB", "MQG", "BEN", "PTM",
+                "BOQ", "IFL", "MFG", "PPT")
