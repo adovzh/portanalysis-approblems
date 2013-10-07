@@ -29,20 +29,19 @@ report <- cbind(asReport(ssa, "[SSA]"),
 stats <- colStats(report, function(x) {
   ret <- crossprod(x, means[stocks])
   vr <- t(x) %*% sigma %*% x
-  sapply(c(Sum=sum(x), 
-           Return=ret,
-           Variance=vr,
-           StDeviation=sqrt(vr)),
-         function(v) sprintf("%.2f%%", v * 100))
+  c(Sum=sum(x), 
+    Return=ret,
+    Variance=vr,
+    StDeviation=sqrt(vr))
 })
 
-print(report)
-print(stats)
+print(report, digits=2)
+print(stats * 100, digits=3)
 
 ylab <- pretty(report)
 cols <- c("#9BA1FC", "#9A3866")
 barplot(t(report), col=cols, beside=TRUE, las=2,
         yaxt="n")
 axis(2, ylab, labels=sprintf("%g%%", ylab * 100) ,las=2)
+legend("topleft", c("SSA", "SSN"), col=cols, pch=15)
 box()
-grid()
