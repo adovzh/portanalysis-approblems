@@ -18,8 +18,8 @@ mv.coords1 <- mv.coords.gen(sigma1, means[p1.stocks])
 z1 <- z.gen(p1.w1, p1.w2)
 mv.points1 <- sapply(alphas, function(alpha) mv.coords1(z1(alpha)))
 
-# 11-stock portfolio including US asset
-p2.stocks <- c(names(weekly)[c(1:3, 5:11)], "SPAUD")
+# 15-asset (14-stock + US asset) portfolio including US asset
+p2.stocks <- c(names(weekly)[c(1:3, 5:15)], "SPAUD")
 sigma2 <- cov(weekly.returns[,p2.stocks]) * 52
 p2.w1 <- findMVP(sigma2, means[p2.stocks], min(means[p2.stocks]))
 p2.w2 <- findMVP(sigma2, means[p2.stocks], max(means[p2.stocks]))
@@ -38,7 +38,7 @@ axis(1, at=pretty(xrng),
      labels=sprintf("%.0f%%", pretty(xrng)*100))
 axis(2, at=pretty(yrng), 
      labels=sprintf("%.0f%%", pretty(yrng)*100))
-legend("topleft", c("15(14)-stock", "11-stock incl. US"), 
+legend("right", c("15(14)-stock", "11-stock incl. US"), 
        pch=16, col=c("black", "blue"), cex=.8)
 box()
 grid()

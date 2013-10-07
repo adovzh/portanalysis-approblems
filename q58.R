@@ -7,7 +7,7 @@ weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 means <- colMeans(weekly.returns) * 52
 alphas <- seq(-1, 1, by=.05)
 
-stocks <- names(weekly)[c(1:3, 5:11)]
+stocks <- names(weekly)[c(1:3, 5:15)]
 sigma <- cov(weekly.returns[,stocks]) * 52
 
 mv.coords <- mv.coords.gen(sigma, means[stocks])

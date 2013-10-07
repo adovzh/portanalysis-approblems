@@ -6,7 +6,7 @@ weekly <- cbind(weekly, SPAUD=weekly[,"S.PCOMP"] / weekly[,"USAUSTR"])
 weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 means <- colMeans(weekly.returns) * 52
 
-stocks <- c(names(weekly)[c(1:3, 5:11)], "SPAUD")
+stocks <- c(names(weekly)[c(1:3, 5:15)], "SPAUD")
 sigma <- cov(weekly.returns[,stocks]) * 52
 
 library(quadprog)
