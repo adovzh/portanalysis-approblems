@@ -38,3 +38,11 @@ asReport <- function(vec, name=NULL, rnames=NULL) {
 
 BANKING_STOCKS <- c("CBA", "WBC", "ANZ", "NAB", "MQG", "BEN", "PTM",
                 "BOQ", "IFL", "MFG", "PPT")
+
+# precision threshold
+EPS <- 1e-10
+
+refine.weights <- function(w, eps=EPS) {
+  w[abs(w) < eps] <- 0
+  return(w)
+}
