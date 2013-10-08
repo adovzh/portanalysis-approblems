@@ -20,26 +20,25 @@ bond.returns <- bond.hpr.weekly(weekly.bonds[-length(weekly.bonds)],
                                 weekly.bonds[-1])
 bond.returns <- timeSeries(bond.returns, time(stock.returns))
 
-solve.q66 <- function(p.returns) {
+solve.q67 <- function(p.returns) {
   means <- colMeans(p.returns) * 52
   sigma <- cov(p.returns) * 52
-
+  
   s <- solve.QP(sigma,
                 matrix(rep(0, ncol(sigma))),
                 cbind(rep(1, ncol(sigma)),
-                      means,
                       diag(ncol(sigma))),
-                c(1, .15, rep(0, ncol(sigma))), 2)$solution
+                c(1, rep(0, ncol(sigma))), 1)$solution
   risk <- t(s) %*% sigma %*% s
   list(weights=s, risk=risk)
 }
 
 # 14-stock portfolio
-s1 <- solve.q66(stock.returns)
+s1 <- solve.q67(stock.returns)
 # stocks + bonds
-s2 <- solve.q66(cbind(stock.returns, bond.returns))
+s2 <- solve.q67(cbind(stock.returns, bond.returns))
 # stocks + bonds + bills
-s3 <- solve.q66(cbind(stock.returns, bond.returns, bill.returns))
+s3 <- solve.q67(cbind(stock.returns, bond.returns, bill.returns))
 
 weights <- cbind(c(refine.weights(s1$weights), c(NA,NA)),
                  c(refine.weights(s2$weights), NA),
