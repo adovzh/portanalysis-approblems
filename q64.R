@@ -24,7 +24,7 @@ p <- par(cex.axis=.7)
 means <- colMeans(weekly.returns) * 52
 risks <- colStdevs(weekly.returns) * sqrt(52)
 xrng <- c(0, risks)
-plot(risks, means, pch=16, xlim=range(xrng), 
+plot(risks, means, pch=16, xlim=range(xrng), ylim=range(means)*1.1,
      col=rainbow(15), axes=FALSE)
 axis(1, at=pretty(xrng), 
      labels=sprintf("%.1f%%", pretty(xrng) * 100))

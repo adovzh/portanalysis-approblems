@@ -64,7 +64,7 @@ p <- par(mfcol=c(2,1), las=1, cex.axis=.7, cex.lab=.8)
 for (i in dimnames(h)[[3]]) {
   barplot(h[,,i], beside=TRUE, col=cols, yaxt="n", ylab=i)
   axis(2, at=pretty(h), labels=sprintf("%g%%", pretty(h)))
-  legend("topleft", dimnames(h)[[1]], col=cols, pch=15, cex=.8)
+  legend(1, .98*max(h[,,i]), dimnames(h)[[1]], col=cols, pch=15, cex=.8)
   box()
 }
 
