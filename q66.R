@@ -41,3 +41,18 @@ s2 <- solve.q66(cbind(stock.returns, bond.returns))
 # stocks + bonds + bills
 s3 <- solve.q66(cbind(stock.returns, bond.returns, bill.returns))
 
+weights <- cbind(c(refine.weights(s1$weights), c(NA,NA)),
+                 c(refine.weights(s2$weights), NA),
+                 refine.weights(s3$weights))
+dimnames(weights) <- list(c(colnames(stock.returns), "Bond", "Bill"),
+                          c("P1", "P2", "P3"))
+print(weights, digits=3)
+
+portfolio.risks <- c(P1=s1$risk, P2=s2$risk, P3=s3$risk)
+p <- par(cex.axis=.8)
+yrng <- pretty(c(0, portfolio.risks))
+barplot(portfolio.risks, col="#9BA1FC", yaxt="n", 
+        ylim=range(yrng))
+axis(2, at=yrng, 
+     labels=sprintf("%g%%", yrng*100), las=1)
+par(p)
