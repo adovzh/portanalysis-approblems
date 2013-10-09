@@ -58,6 +58,20 @@ w <- lapply(betas, function(target) {
 
 mv.points2 <- sapply(w, mv.coords)
 
+# Step 3
+lambdas <- seq(-.3, .3, by=.02)
+
+sw3 <- lapply(lambdas, function(lambda) {
+  solve.QP(sigma,
+           means * lambda,
+           cbind(rep(1, ncol(sigma)),
+                 diag(ncol(sigma))),
+           c(1, rep(0,ncol(sigma))), 1)$solution    
+})
+
+mv.points3 <- sapply(sw3, mv.coords)
+mv.points1 <- mv.points3
+
 p <- par(cex.axis=.8, las=1)
 cols <- c("magenta", "orange")
 xrng <- range(mv.points1[1,], mv.points2[1,])
@@ -67,7 +81,7 @@ plot(mv.points1[1,], mv.points1[2,],
      xlab="St deviation", ylab="Expected return",
      xlim=xrng,
      ylim=yrng)
-points(mv.points2[1,], mv.points2[2,], pch=17, col=cols[2], type="o")
+# points(mv.points2[1,], mv.points2[2,], pch=17, col=cols[2], type="o")
 axis(1, at=pretty(xrng), 
      labels=sprintf("%g%%", pretty(xrng)*100))
 axis(2, at=pretty(yrng), 
