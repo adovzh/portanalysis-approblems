@@ -24,21 +24,23 @@ weekly.returns <- cbind(stock.returns, bond.returns, bill.returns)
 
 means <- colMeans(weekly.returns) * 52
 sigma <- cov(weekly.returns) * 52
-alphas <- seq(-1, 1, by=.05)
+alphas <- seq(-1, 1.5, by=.05)
 mv.coords <- mv.coords.gen(sigma, means)
 
 # no short sales unconstrained portfolio
 p1.w1 <- solve.QP(sigma,
                   matrix(rep(0, ncol(sigma))),
                   cbind(rep(1, ncol(sigma)),
-                        means),
-                  c(1, min(means) + EPS), 2)$solution
+                        means,
+                        diag(ncol(sigma))),
+                  c(1, min(means) + EPS, rep(0,ncol(sigma))), 2)$solution
 
 p1.w2 <- solve.QP(sigma,
                   matrix(rep(0, ncol(sigma))),
                   cbind(rep(1, ncol(sigma)),
-                        means),
-                  c(1, max(means)), 2)$solution
+                        means,
+                        diag(ncol(sigma))),
+                  c(1, max(means)-EPS, rep(0, ncol(sigma))), 2)$solution
 
 z1 <- z.gen(p1.w1, p1.w2)
 mv.points1 <- sapply(alphas, function(alpha) mv.coords(z1(alpha)))
@@ -48,15 +50,17 @@ p2.w1 <- solve.QP(sigma,
                   matrix(rep(0, ncol(sigma))),
                   cbind(rep(1, ncol(sigma)),
                         c(rep(1, ncol(sigma) - 2), rep(0, 2)),
-                        means),
-                  c(1, .8, min(means) + EPS), 2)$solution
+                        means,
+                        diag(ncol(sigma))),
+                  c(1, .8, min(means) * .7, rep(0, ncol(sigma))), 3)$solution
 
 p2.w2 <- solve.QP(sigma,
                   matrix(rep(0, ncol(sigma))),
                   cbind(rep(1, ncol(sigma)),
                         c(rep(1, ncol(sigma) - 2), rep(0, 2)),
-                        means),
-                  c(1, .8, max(means)), 2)$solution
+                        means,
+                        diag(ncol(sigma))),
+                  c(1, .8, max(means)*0.8, rep(0, ncol(sigma))), 3)$solution
 z2 <- z.gen(p2.w1, p2.w2)
 mv.points2 <- sapply(alphas, function(alpha) mv.coords(z2(alpha)))
 
