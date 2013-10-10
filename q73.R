@@ -13,11 +13,11 @@ investment.returns <- window(weekly.returns,
                              end=end(weekly.returns))
 means <- rbind(colMeans(history.returns), colMeans(investment.returns)) * 52
 
-p <- par(cex.axis=.7, las=2, no.readonly=TRUE)
+p <- par(cex.axis=.7, las=2, cex.lab=.8, font.lab=2, no.readonly=TRUE)
 cols <- c("#9A3866", "#9BA1FC")
 yrng <- pretty(c(means, max(means)*1.4)) 
-barplot(means, beside=TRUE, col=cols, main="Means",
-        ylim=range(yrng), yaxt="n")
+barplot(means, beside=TRUE, col=cols, main="Expected returns",
+        ylim=range(yrng), yaxt="n", ylab="Return")
 axis(2, at=yrng, 
      labels=sprintf("%g%%", yrng*100))
 legend("top", c("1st Half", "2nd Half"), 
