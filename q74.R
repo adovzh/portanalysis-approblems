@@ -17,9 +17,11 @@ sds <- rbind(colStdevs(history.returns),
 
 p <- par(cex.axis=.7, las=2, no.readonly=TRUE)
 cols <- c("#9A3866", "#9BA1FC")
-yrng <- pretty(c(0, sds))
+yrng <- pretty(c(0, sds) * 1.4) 
 barplot(sds, beside=TRUE, col=cols, main="Standard Deviations",
         ylim=range(yrng), yaxt="n")
 axis(2, at=yrng, 
      labels=sprintf("%g%%", yrng*100))
+legend("top", c("1st Half", "2nd Half"), 
+       col=cols, pch=15, cex=.8, bty="n")
 par(p)
