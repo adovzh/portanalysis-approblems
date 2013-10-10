@@ -65,6 +65,6 @@ yrng <- pretty(c(0, w1, w2, w3))
 p <- par(cex.axis=.8, las=2)
 barplot(report, beside=T, col=cols, yaxt="n", ylim=range(yrng))
 axis(2, at=yrng, 
-     labels=sprintf("%g%%", pretty(yrng)*100))
+     labels=sprintf("%g%%", yrng*100))
 legend("top", dimnames(report)[[1]], col=cols, pch=15, cex=.8)
 par(p)
