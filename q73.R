@@ -3,14 +3,23 @@ source("common.R")
 
 weekly <- toTimeSeries(loadWeekly())
 weekly <- weekly[,c(1:3, 5:15)]
+weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 pointcut <- as.Date(max(time(weekly))) - 731
-history <- window(weekly, start=start(weekly), end=pointcut)
-investment <- window(weekly, start=pointcut+1, end=end(weekly))
-means <- rbind(colMeans(history), colMeans(investment))
+history.returns <- window(weekly.returns, 
+                          start=start(weekly.returns), 
+                          end=pointcut)
+investment.returns <- window(weekly.returns, 
+                             start=pointcut+1, 
+                             end=end(weekly.returns))
+means <- rbind(colMeans(history.returns), colMeans(investment.returns)) * 52
 
 p <- par(cex.axis=.7, las=2, no.readonly=TRUE)
 cols <- c("#9A3866", "#9BA1FC")
-barplot(means, beside=TRUE, col=cols, main="Means")
+yrng <- pretty(c(means, max(means)*1.4)) 
+barplot(means, beside=TRUE, col=cols, main="Means",
+        ylim=range(yrng), yaxt="n")
+axis(2, at=yrng, 
+     labels=sprintf("%g%%", yrng*100))
 legend("top", c("1st Half", "2nd Half"), 
        col=cols, pch=15, cex=.8, bty="n")
 par(p)
