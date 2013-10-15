@@ -24,31 +24,32 @@ weekly.returns <- cbind(stock.returns, bond.returns, bill.returns)
 
 means <- colMeans(weekly.returns) * 52
 sigma <- cov(weekly.returns) * 52
-lambdas <- seq(-.3, .3, by=.02)
+alphas <- seq(.09, .4, length.out=50)
 mv.coords <- mv.coords.gen(sigma, means)
+meanp <- range(means) %*% rbind(alphas, 1 - alphas)
 
 # no short sales unconstrained portfolio
-p1.w <- lapply(lambdas, function(lambda) {
-  solve.QP(sigma,
-           means * lambda,
+p1.w <- apply(meanp, 2, function(target.return) {
+  solve.QP(sigma, matrix(rep(0, ncol(sigma))),
            cbind(rep(1, ncol(sigma)),
+                 means,
                  diag(ncol(sigma))),
-           c(1, rep(0,ncol(sigma))), 1)$solution      
+           c(1, target.return, rep(0,ncol(sigma))), 2)$solution      
 })
 
-mv.points1 <- sapply(p1.w, mv.coords)
+mv.points1 <- apply(p1.w, 2, mv.coords)
 
 # no short sales, equity = 80%
-p2.w <- lapply(lambdas, function(lambda) {
-  solve.QP(sigma,
-           means * lambda,
+p2.w <- apply(meanp, 2, function(target.return) {
+  solve.QP(sigma, matrix(rep(0, ncol(sigma))),
            cbind(rep(1, ncol(sigma)),
+                 means,
                  c(rep(1, ncol(sigma) - 2), rep(0, 2)),
                  diag(ncol(sigma))),
-           c(1, .8, rep(0,ncol(sigma))), 2)$solution      
+           c(1, target.return, .8, rep(0,ncol(sigma))), 3)$solution      
 })
 
-mv.points2 <- sapply(p2.w, mv.coords)
+mv.points2 <- apply(p2.w, 2, mv.coords)
 
 p <- par(cex.axis=.8, las=1)
 cols <- c("magenta", "orange")
