@@ -18,14 +18,12 @@ hmr <- range(colMeans(history.returns)*52)
 imr <- range(colMeans(investment.returns)*52)
 # common.means <- c(max(hmr[1], imr[1]), min(hmr[2], imr[2]))
 common.means <- hmr
-alphas <- seq(0.01, .6, length.out=50)
+alphas <- seq(0.001, .999, length.out=50)
 meanp <- common.means %*% rbind(alphas, 1 - alphas)
 
 q76 <- function(r) {
   means <- colMeans(r) * 52
   sigma <- cov(r) * 52
-#   lambdas <- seq(-.3, .3, by=.02)
-#   meanp <- range(means) %*% rbind(alphas, 1 - alphas)
   
   w <- apply(meanp, 2, function(target.return) {
     solve.QP(sigma, matrix(rep(0, ncol(sigma))),

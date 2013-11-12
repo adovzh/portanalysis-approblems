@@ -2,6 +2,9 @@ library(timeSeries)
 source("common.R")
 
 weekly <- toTimeSeries(loadWeekly())
+# exclude GFC data
+weekly <- window(weekly, start="2009-01-01",
+                 end=Sys.timeDate())
 weekly <- weekly[,c(1:3, 5:15)]
 weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 pointcut <- as.Date(max(time(weekly))) - 731
