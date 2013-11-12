@@ -59,7 +59,7 @@ dimnames(h) <- list(c("Nominal yields", "Weekly HPY"),
                     c("90-Day", "10-Yr"), 
                     c("Average yields", "St.deviation of yields"))
 cols <- c("#9BA1FC", "#9A3866")
-p <- par(mfcol=c(2,1), las=1, cex.axis=.7, cex.lab=.8)
+p <- par(las=1, cex.axis=.7, cex.lab=.8)
 
 for (i in dimnames(h)[[3]]) {
   barplot(h[,,i], beside=TRUE, col=cols, yaxt="n", ylab=i)

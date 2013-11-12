@@ -31,7 +31,7 @@ solve.q66 <- function(p.returns) {
                       diag(ncol(sigma))),
                 c(1, .15, rep(0, ncol(sigma))), 2)$solution
   risk <- t(s) %*% sigma %*% s
-  list(weights=s, risk=risk)
+  list(weights=s, risk=sqrt(risk))
 }
 
 # 14-stock portfolio

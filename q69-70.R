@@ -30,7 +30,7 @@ w1 <- solve.QP(sigma,
                cbind(rep(1, ncol(sigma)),
                      means,
                      diag(ncol(sigma))),
-               c(1, .16, rep(0, ncol(sigma))), 2)$solution
+               c(1, .15, rep(0, ncol(sigma))), 2)$solution
 
 w2 <- solve.QP(sigma,
                matrix(rep(0, ncol(sigma))),

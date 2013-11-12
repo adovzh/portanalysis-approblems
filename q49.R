@@ -16,7 +16,7 @@ w <- findMVP(cov(weekly.returns), means, target.return)
 stopifnot(abs(sum(w) - 1) < 1e-9)
 stopifnot(abs(sum(means * w) - target.return) < 1e-9)
 
-print(w)
+print(as.matrix(w))
 
 # s <- solve.QP(cov(weekly.returns),
 #               matrix(rep(0, ncol(weekly))),

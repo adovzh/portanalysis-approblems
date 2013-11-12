@@ -36,7 +36,7 @@ p2.w <- lapply(meanp, function(target.return) {
 
 mv.points2 <- sapply(p2.w, mv.coords)
 
-p <- par(mfcol=c(2,1), cex.axis=.8, cex.lab=.8, font.lab=2, las=1)
+p <- par(cex.axis=.8, cex.lab=.8, font.lab=2, las=1)
 xrng <- range(mv.points1[1,], mv.points2[1,])
 yrng <- range(mv.points1[2,], mv.points2[2,])
 plot(mv.points1[1,], mv.points1[2,], 

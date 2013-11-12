@@ -24,7 +24,7 @@ weekly.returns <- cbind(stock.returns, bond.returns, bill.returns)
 
 means <- colMeans(weekly.returns) * 52
 sigma <- cov(weekly.returns) * 52
-alphas <- seq(.09, .4, length.out=50)
+alphas <- c(.07395, .076, 0.078, seq(.09, .875, length.out=50))
 mv.coords <- mv.coords.gen(sigma, means)
 meanp <- range(means) %*% rbind(alphas, 1 - alphas)
 
@@ -51,22 +51,38 @@ p2.w <- apply(meanp, 2, function(target.return) {
 
 mv.points2 <- apply(p2.w, 2, mv.coords)
 
+# no short sales, equity >= 80%
+p3.w <- apply(meanp, 2, function(target.return) {
+  solve.QP(sigma, matrix(rep(0, ncol(sigma))),
+           cbind(rep(1, ncol(sigma)),
+                 means,
+                 c(rep(1, ncol(sigma) - 2), rep(0, 2)),
+                 diag(ncol(sigma))),
+           c(1, target.return, .8, rep(0,ncol(sigma))), 2)$solution      
+})
+
+
+mv.points3 <- apply(p3.w, 2, mv.coords)
+
 p <- par(cex.axis=.8, las=1)
-cols <- c("magenta", "orange")
-xrng <- range(mv.points1[1,], mv.points2[1,])
-yrng <- range(mv.points1[2,], mv.points2[2,])
+cols <- c("magenta", "orange", "darkgreen")
+xrng <- range(mv.points1[1,], mv.points2[1,], mv.points3[1,])
+yrng <- range(mv.points1[2,], mv.points2[2,], mv.points3[2,])
 plot(mv.points1[1,], mv.points1[2,], 
      type="o", pch=18, axes=FALSE, col=cols[1],
      xlab="St deviation", ylab="Expected return",
      xlim=xrng,
      ylim=yrng)
 points(mv.points2[1,], mv.points2[2,], pch=17, col=cols[2], type="o")
+points(mv.points3[1,], mv.points3[2,], pch=18, col=cols[3], type="o")
 axis(1, at=pretty(xrng), 
      labels=sprintf("%g%%", pretty(xrng)*100))
 axis(2, at=pretty(yrng), 
      labels=sprintf("%g%%", pretty(yrng)*100))
 box()
 grid()
-legend("topleft", c("Unconstrainted 16 assets", "Equality constrained (80%)"), 
-       pch=c(18,17), col=cols, cex=.8)
+legend("right", c("Unconstrainted 16 assets", 
+                    "Equality constrained (80%)",
+                    "Inequality constrainted (80%)"), 
+       pch=c(18,17, 18), col=cols, cex=.8)
 par(p)

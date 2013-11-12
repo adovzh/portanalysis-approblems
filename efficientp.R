@@ -20,7 +20,7 @@ findMVP <- function(sigma, ret, target.return) {
 # given covariance matrix and vector of expected returns
 mv.coords.gen <- function(a_sigma, a_means) {
   function(w) {
-    risk <- t(w) %*% a_sigma %*% w
+    risk <- sqrt(t(w) %*% a_sigma %*% w)
     ret <- a_means %*% w
     c(risk, ret)    
   }

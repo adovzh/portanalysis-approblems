@@ -7,8 +7,8 @@ weekly <- toTimeSeries(loadWeekly())[,1:15]
 weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 
 # stocks <- sample(1:15, 3)
-stocks <- c(5,2,3)
-data <- as.timeSeries(weekly[,stocks])
+stocks <- c(1,2,3)
+data <- as.timeSeries(weekly.returns[,stocks])
 
 absMinRiskWeights <- function(tS) {
   om <- cov(tS)

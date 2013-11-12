@@ -5,7 +5,7 @@ weekly <- toTimeSeries(loadWeekly())[,1:15]
 weekly.returns <- na.omit(fapply(weekly, FUN=returns))
 cum.returns <- colCumsums(weekly.returns)
 
-oldpar <- par(mfrow=c(2,1))
+# oldpar <- par(mfrow=c(2,1))
 colors <- rainbow(n=15, v=.9)
 plot(cum.returns[,1], ylim=range(cum.returns), col=colors[1],
      ylab="Cumulative returns")
@@ -26,4 +26,4 @@ title(main="Best and worst stocks")
 legend("bottomleft", colnames(weekly)[range.index], 
        lwd=2, col=colors[range.index])
 
-par(oldpar)
+# par(oldpar)
